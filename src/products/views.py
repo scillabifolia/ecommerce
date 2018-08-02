@@ -37,7 +37,7 @@ class ProductDetailView(DetailView):
     def get_object(self, *args, **Kwargs):
         request = self.request
         pk = self.kwargs.get('pk')
-        instance = Product.objects.get(id=pk)
+        instance = Product.objects.get_by_id(id=pk)
         if instance is None:
             raise Http404("Product doesn't exist")
         return instance
@@ -58,7 +58,7 @@ def product_detail_view(request, pk=None, *args, **kwargs):
     # # except Product.DoesNotExist:
     # #     print('huh?')
 
-    instance = Product.objects.get(id=pk)
+    instance = Product.objects.get_by_id(id=pk)
     if instance is None:
         raise Http404("Product doesn't exist")
     # print(instance)

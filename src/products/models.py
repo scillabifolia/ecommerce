@@ -28,12 +28,15 @@ class ProductManager(models.Manager):
             return qs.first()
         return None
 
+
 class Product(models.Model): #ProductCategory
     title = models.CharField(max_length=120)
     description = models.TextField(default='put your description here') #Documentation Model field reference
     price = models.DecimalField(decimal_places=2, max_digits=20, default=39.99)
     #for large fille uploads check kirr.co/e1133
     image = models.ImageField(upload_to=upload_image_path, null=True, blank=True)
+
+    objects = ProductManager()
 
     def __str__(self):
         return self.title

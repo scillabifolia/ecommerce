@@ -15,16 +15,24 @@ def upload_image_path(instance, filename):
     # print(filename)
     new_filename = random.randint(1, 2712316896)
     name, ext = get_filename_ext(filename)
-    final_filename = '{new_filename}{ext}'.format(new_filename=new_filename, ext=ext)
+    final_filename = f'{new_filename}{ext}'#.format(new_filename=new_filename, ext=ext)
     return "static_cdn/media_root/products/{new_filename}/{final_filename}".format(
             new_filename=new_filename,
             final_filename=final_filename
             )
 
+class ProductManager(models.Manager):
+    def get_by_id(self, id):
+        qs = self.get_queryset().filter(id=id)
+        if qs.count() == 1:
+            return qs.first()
+        return None
+
 class Product(models.Model): #ProductCategory
     title = models.CharField(max_length=120)
     description = models.TextField(default='put your description here') #Documentation Model field reference
     price = models.DecimalField(decimal_places=2, max_digits=20, default=39.99)
+    #for large fille uploads check kirr.co/e1133
     image = models.ImageField(upload_to=upload_image_path, null=True, blank=True)
 
     def __str__(self):

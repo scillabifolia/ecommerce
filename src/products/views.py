@@ -25,7 +25,7 @@ def product_list_view(request):
 
 
 class ProductDetailView(DetailView):
-    queryset = Product.objects.all()
+    # queryset = Product.objects.all()
     template_name = "products/detail.html"
 
     def get_context_data(self,*args, **kwargs):
@@ -33,6 +33,15 @@ class ProductDetailView(DetailView):
         print(context)
         #context['abc'] =123
         return context
+
+    def get_object(self, *args, **Kwargs):
+        request = self.request
+        pk = self.kwargs.get('pk')
+        instance = Product.objects.get(id=pk)
+        if instance is None:
+            raise Http404("Product doesn't exist")
+        return instance
+
 
 
 def product_detail_view(request, pk=None, *args, **kwargs):

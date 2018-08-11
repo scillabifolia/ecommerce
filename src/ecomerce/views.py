@@ -18,6 +18,7 @@ def about_page(request):
 
 
 def contact_page(request):
+
     contact_form = ContactForm(request.POST or None)
     context = {
         "title": "Hello World!",
